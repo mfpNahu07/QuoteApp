@@ -1,11 +1,12 @@
-package com.nahuel.quotesapp.view
+package com.nahuel.quotesapp.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.nahuel.quotesapp.databinding.ActivityMainBinding
-import com.nahuel.quotesapp.viewmodel.QuoteViewModel
+import com.nahuel.quotesapp.ui.viewmodel.QuoteViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        quoteViewModel.onCreate()
+
 
         quoteViewModel.quoteModel.observe(this, Observer {
             binding.tvQuote.text = it.quote
@@ -27,8 +30,14 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        quoteViewModel.isLoading.observe(this, Observer {
+            binding.progress.isVisible = it
+        })
+
         binding.viewContainer.setOnClickListener {
             quoteViewModel.randomQuote()
         }
     }
 }
+
+
