@@ -7,7 +7,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.nahuel.quotesapp.databinding.ActivityMainBinding
 import com.nahuel.quotesapp.ui.viewmodel.QuoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
 

@@ -1,11 +1,10 @@
 package com.nahuel.quotesapp.data.model
 
-class QuoteProvider {
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-    companion object {
-
+@Singleton
+class QuoteProvider @Inject constructor() {
      var quotes: List<QuoteModel> = emptyList()
 
-    }
 }
