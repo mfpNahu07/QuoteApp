@@ -1,17 +1,18 @@
 package com.nahuel.quotesapp.domain
 
 
+import com.nahuel.quotesapp.data.QuoteRepository
 import com.nahuel.quotesapp.data.model.QuoteModel
-import com.nahuel.quotesapp.data.model.QuoteProvider
+import com.nahuel.quotesapp.domain.model.Quote
 import javax.inject.Inject
 
-class GetRandomQuoteUseCase @Inject constructor(private val quoteProvider: QuoteProvider){
+class GetRandomQuoteUseCase @Inject constructor(private val repository: QuoteRepository){
 
 
-    //Ahora no es funcion suspend porque lo tenemos almacenado en memoria, en base de datos sí.
-    operator fun invoke(): QuoteModel?{
 
-       val quotes =quoteProvider.quotes
+    suspend operator fun invoke(): Quote?{
+
+       val quotes =repository.getAllQuotesFromDatabase()
         if(!quotes.isNullOrEmpty()){
             val randomNumber = (quotes.indices).random()  //(0..quotes.size -1).random()
             return quotes[randomNumber]

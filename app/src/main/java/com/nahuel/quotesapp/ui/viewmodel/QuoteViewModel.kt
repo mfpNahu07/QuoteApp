@@ -3,10 +3,9 @@ package com.nahuel.quotesapp.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nahuel.quotesapp.data.model.QuoteModel
-import com.nahuel.quotesapp.data.model.QuoteProvider
 import com.nahuel.quotesapp.domain.GetQuotesUseCase
 import com.nahuel.quotesapp.domain.GetRandomQuoteUseCase
+import com.nahuel.quotesapp.domain.model.Quote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +17,7 @@ class QuoteViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    val quoteModel = MutableLiveData<QuoteModel>()
+    val quoteModel = MutableLiveData<Quote>()
     val isLoading = MutableLiveData<Boolean>()
 
 
@@ -37,13 +36,15 @@ class QuoteViewModel @Inject constructor(
     }
 
     fun randomQuote() {
-        isLoading.postValue(true)
+        viewModelScope.launch {
+            isLoading.postValue(true)
 
-        val quote = getRandomQuoteUseCase()
-        if (quote != null) {
+            val quote = getRandomQuoteUseCase()
+            if (quote != null) {
 
-            quoteModel.postValue(quote)
-            isLoading.postValue(false)
+                quoteModel.postValue(quote)
+                isLoading.postValue(false)
+            }
         }
 
 
